@@ -2,9 +2,11 @@ package com.zain.uber.controller;
 
 import com.zain.uber.service.RideService;
 import com.zain.uber.dto.RiderInfoSummary;
+import com.zain.uber.dto.RouteSummary;
 import com.zain.uber.entity.Rider;
 // import com.zain.uber.dto.RiderInfo;
 import com.zain.uber.enums.RideType;
+import com.zain.uber.dto.RideLengthSummary;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,12 +30,15 @@ public class RideController {
         return "Ride saved successfully!";
     }
 
-    @GetMapping("/https://api.openrouteservice.org/v2/directions/driving-car?api_key=eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjljMDk2ZTUwYTQyNDQ3NjE5N2Y2OWVlY2RmZTI5OGIxIiwiaCI6Im11cm11cjY0In0=&start={startLat},{startLong}&end={endLat},{endLong}}")
-    public double getTotalDistance() {
-        
-    }
 
-    public double getTotalDuration()
+    // public RiderInfoSummary estimateRide() {
+
+    // }
+
+    // @GetMapping("route-summary/{id}")    
+    // public RouteSummary routeSummary(@PathVariable Long id) {
+        
+    // }
 
 
     @GetMapping("/ride-order-summary/{id}")
@@ -45,15 +50,11 @@ public class RideController {
         String location = riderInfo.getLocation();
         RideType rideType = riderInfo.getRideType();
 
-        double startLat = riderInfo.getStartLat();
-        double startLang = riderInfo.getStartLang();
-        double endLat = riderInfo.getEndLat();
-        double endLang = riderInfo.getEndLang();
+        RideLengthSummary routeSummary = rideService.routeSummary(id);
+        double totalDistance = routeSummary.getTotalDistance();
+        double totalDuration = routeSummary.getTotalDuration();
 
-
-
-        
-        return new RiderInfoSummary(riderName, destination, location, rideType); 
+        return new RiderInfoSummary(riderName, destination, location, rideType, totalDistance, totalDuration); 
         
     }
     // @GetMapping("/ride-summary/{id}")

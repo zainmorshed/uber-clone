@@ -6,7 +6,8 @@ public enum RideType {
     UBERXL,
     UBERBLACK,
     UBERPRET,
-    UBERGREEN
+    UBERGREEN,
+    WAYMO
 
 
 }
