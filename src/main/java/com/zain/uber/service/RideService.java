@@ -10,6 +10,7 @@ import com.zain.uber.repository.RideRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service
@@ -34,15 +35,33 @@ public class RideService {
         
     }
 
-    public RideLengthSummary routeSummary(Long id) {
+    public Rider findRider(Long id) {
         Rider rider = rideRepo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
+        return rider;
+    }
+
+    public RideLengthSummary routeSummary(Long id) {
+        Rider rider = findRider(id);
 
         double startLat = rider.getStartLat();
         double startLng = rider.getStartLang();
         double endLat = rider.getEndLat();
         double endLang = rider.getEndLang();
 
-        RideLengthSummary routeSummary = orsClient.routeSummary(startLat, startLng, endLat, endLang);
+        RideLengthSummary routeSummary = orsClient.rideLengthSummary(startLat, startLng, endLat, endLang);
         return routeSummary;
+    }
+
+    public List<String> getTripDirections(Long id) {
+        Rider rider = findRider(id);
+        
+        double startLat = rider.getStartLat();
+        double startLng = rider.getStartLang();
+        double endLat = rider.getEndLat();
+        double endLang = rider.getEndLang();
+
+        
+        List<String> tripDirections = orsClient.tripDirections(startLat, startLng, endLat, endLang); 
+        return tripDirections;
     }
 }

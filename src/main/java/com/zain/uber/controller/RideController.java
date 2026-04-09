@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/ride")
 public class RideController {
@@ -61,6 +63,11 @@ public class RideController {
     // public Rider riderSummary(@PathVariable Long id) {
     //     return rideService.riderInfoSummary(id);
     // }
+
+    @GetMapping("/trip-directions/{id}")
+    public List<String> getTripDirections(@PathVariable Long id) {
+        return rideService.getTripDirections(id);
+    }
 
     @DeleteMapping("/delete-rider/{id}")
     public String deleteRider(@PathVariable Long id) {
