@@ -56,7 +56,9 @@ public class RideController {
         double totalDistance = routeSummary.getTotalDistance();
         double totalDuration = routeSummary.getTotalDuration();
 
-        return new RiderInfoSummary(riderName, destination, location, rideType, totalDistance, totalDuration); 
+        double tripFare = rideService.tripFare(id);
+
+        return new RiderInfoSummary(riderName, destination, location, rideType, totalDistance, totalDuration, tripFare); 
         
     }
     // @GetMapping("/ride-summary/{id}")

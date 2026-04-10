@@ -12,14 +12,17 @@ public class RiderInfoSummary {
     private double totalDistance;
     private double totalDuration;
 
+    private double tripFare;
 
-    public RiderInfoSummary(String name, String destination, String location, RideType rideType, double totalDistance, double totalDuration) {
+
+    public RiderInfoSummary(String name, String destination, String location, RideType rideType, double totalDistance, double totalDuration, double tripFare) {
         this.name = name;
         this.destination = destination;
         this.location = location;
         this.rideType = rideType;
         this.totalDistance = totalDistance;
         this.totalDuration = totalDuration;
+        this.tripFare = tripFare;
     }
 
     public RiderInfoSummary() {
@@ -74,6 +77,14 @@ public class RiderInfoSummary {
 
     public RideType getRideType() {
         return rideType;
+    }
+
+    public double getTripFare() {
+        return tripFare;
+    }
+
+    public void setTripFare(double tripFare) {
+        this.tripFare = tripFare;
     }
 
 

@@ -2,6 +2,7 @@ package com.zain.uber.service;
 
 // import com.zain.uber.dto.RiderInfo;
 import com.zain.uber.entity.Rider;
+import com.zain.uber.enums.RideType;
 import com.zain.uber.client.OpenRouteServiceClient;
 import com.zain.uber.dto.RideLengthSummary;
 import com.zain.uber.dto.RiderInfoSummary;
@@ -63,5 +64,30 @@ public class RideService {
         
         List<String> tripDirections = orsClient.tripDirections(startLat, startLng, endLat, endLang); 
         return tripDirections;
+    }
+
+    public double tripFare(Long id){
+        Rider rider = riderInfoSummary(id);
+
+        double vehiclePricing = 0.0;
+        if (rider.getRideType() == RideType.UBERX) {
+            vehiclePricing = 5.0;
+        } else if (rider.getRideType() == RideType.UBERXL) {
+            vehiclePricing = 7.5;
+        } else if (rider.getRideType() == RideType.UBERBLACK) {
+            vehiclePricing = 10.0;
+        } else if (rider.getRideType() == RideType.WAYMO) {
+            vehiclePricing = 12.5;
+        }
+
+        RideLengthSummary rideLengthSummary = routeSummary(id);
+
+        double totalDistance = rideLengthSummary.getTotalDistance();
+        double totalTime = rideLengthSummary.getTotalDuration();
+
+        double tripFare = (totalDistance/1000 * 5.5)+vehiclePricing;
+
+        return tripFare;
+        
     }
 }
